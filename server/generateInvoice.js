@@ -1,7 +1,7 @@
 import { GenezioDeploy } from "@genezio/types";
 import { format, addDays } from "date-fns";
 import { GetJiraClosedTasksService } from "./getJiraClosedTasks";
-import { SendXMLService } from './genpdf'
+import { SendXMLService } from "./genpdf";
 
 const SELLER_INFO = {
   nume_companie: "Lettuce Cook",
@@ -19,27 +19,29 @@ const fac = {
   issueDate: "2024-04-13",
   dueDate: "2024-04-20",
   curr: "RON",
-  seller : {
-      nume_companie: "Hello inc",
-      nr_reg: "98871798579",
-      CUI: "16350738"
+  seller: {
+    nume_companie: "Hello inc",
+    nr_reg: "98871798579",
+    CUI: "16350738",
   },
-  client : {
-      nume_companie: "Bye inc",
-      nr_reg: "5387685871638",
-      CUI: "33184554"
+  client: {
+    nume_companie: "Bye inc",
+    nr_reg: "5387685871638",
+    CUI: "33184554",
   },
-  legal : {
-      tot_net: 402,
-      tot_no_vat: 300
+  legal: {
+    tot_net: 402,
+    tot_no_vat: 300,
   },
-  items : [
-      {
-          id: 1, sum: 300, desc: "jfdhskfdhd", name: "fjvkj"
-      }
-  ]
-
-}
+  items: [
+    {
+      id: 1,
+      sum: 300,
+      desc: "jfdhskfdhd",
+      name: "fjvkj",
+    },
+  ],
+};
 
 @GenezioDeploy()
 export class GenerateInvoiceService {
@@ -74,7 +76,7 @@ export class GenerateInvoiceService {
         },
       ],
     };
-    return SendXMLService.sendXMLAndGetPDF(invoice)
-    
+    const result = await SendXMLService.sendXMLAndGetPDF(invoice);
+    return result;
   }
 }

@@ -25,7 +25,7 @@ function Form() {
     // Send formData to server for processing
     const response = await GenerateInvoiceService.generateInvoice(formData);
     if (response) {
-      setPdfData(response);
+      setPdfData(response?.data);
       // Reset form after submission
       setFormData({
         invoiceID: "",
@@ -39,11 +39,15 @@ function Form() {
   function onDownloadPdf() {
     if (pdfData) {
       const element = document.createElement("a");
-      const file = new Blob([pdfData], { type: "application/pdf" });
+      const file = new Blob([new Uint8Array(pdfData)], {
+        type: "application/pdf",
+      });
       element.href = URL.createObjectURL(file);
       element.download = "invoice.pdf";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
+    } else {
+      console.error("Error: PDF data is undefined or empty.");
     }
   }
 
