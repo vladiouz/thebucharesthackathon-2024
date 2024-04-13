@@ -1,11 +1,11 @@
 import { GenezioDeploy } from "@genezio/types";
-import fetch from "node-fetch";
 
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 @GenezioDeploy()
 export class SendMailService {
-  async sendMail(to, subject, text) {
+  async sendMail(to, subject, text, filename) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -15,11 +15,17 @@ export class SendMailService {
     });
 
     let mailOptions = {
-        from: "bucharest-cp@eestec.net",
-        to: to,
-        subject: subject,
-        text: text
-    }
+      from: "bucharest-cp@eestec.net",
+      to: to,
+      subject: subject,
+      text: text,
+      attachments: [
+        {
+          filename: filename,
+          content: fs.createReadStream(filename),
+        },
+      ],
+    };
 
     transporter.sendMail(mailOptions, function(err, info) {
       if(err) {
