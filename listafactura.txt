@@ -1,0 +1,45 @@
+
+Campuri factura
+
+--
+Numar factura
+Data factura
+Data scadenta(not mandatory)
+
+--Client:
+Numele clientului
+Nr.Reg.Comertului
+CIF al clientului(not mandatory)
+Adresa clientului
+
+
+--Adaugare produs sau serviciu:
+preturile includ TVA   Da/Numar
+
+Denumire
+Cantitate
+Pret unitar
+Total
+TVA(%)
+TVA
+
+Total fara TVA
+Total taxe TVA
+Total de plata
+
+
+--Furnizor:
+Denumire firma
+Nr.Reg.Comertului(not mandatory)
+CIF(not mandatory)
+Adresa
+Telefon(not mandatory)
+Capital social
+
+--Detalii plata:
+
+Nume banca(not mandatory)
+IBAN(not mandatory)
+BIC(not mandatory)
+
+Observatii factura
