@@ -1,19 +1,19 @@
 
 Campuri factura
 
---
+--dateFactura:
 Numar factura
 Data factura
 Data scadenta(not mandatory)
 
---Client:
+--dateClient:
 Numele clientului
 Nr.Reg.Comertului
 CIF al clientului(not mandatory)
 Adresa clientului
 
 
---Adaugare produs sau serviciu:
+--adaugareProdus sau serviciu:
 preturile includ TVA   Da/Numar
 
 Denumire
@@ -36,7 +36,7 @@ Adresa
 Telefon(not mandatory)
 Capital social
 
---Detalii plata:
+--detaliiPlata:
 
 Nume banca(not mandatory)
 IBAN(not mandatory)
