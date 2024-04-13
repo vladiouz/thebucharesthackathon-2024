@@ -9,6 +9,8 @@ function Form() {
     cifClient: "",
   });
 
+  const [isGenerated, setIsGenerated] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -22,30 +24,37 @@ function Form() {
 
     e.preventDefault();
     // Send formData to server for processing
-    fetch("your-server-endpoint", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Server Response:", data);
-        // Optionally handle server response
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        // Optionally handle errors
-      });
 
-    // Reset form after submission
-    setFormData({
-      numarFactura: "",
-      dataFactura: "",
-      dataScadenta: "",
-      cifClient: "",
-    });
+    if (isGenerated === false) {
+      fetch("your-server-endpoint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Server Response:", data);
+          setIsGenerated(true);
+          // Optionally handle server response
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+
+          // Optionally handle errors
+        });
+
+      // Reset form after submission
+      setFormData({
+        numarFactura: "",
+        dataFactura: "",
+        dataScadenta: "",
+        cifClient: "",
+      });
+    } else {
+      //AICI DESCARCA FISIER
+    }
   };
 
   return (
@@ -93,7 +102,9 @@ function Form() {
           />
         </div>
 
-        <button type="submit">Salveaza Factura</button>
+        <button type="submit">
+          {isGenerated === false ? "Genereaza Factura" : "Descarca Factura"}
+        </button>
       </form>
     </div>
   );
