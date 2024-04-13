@@ -1,14 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import { BackendService } from "@genezio-sdk/the-bucharest-hackathon-2024";
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import { GenerateInvoiceService } from "@genezio-sdk/the-bucharest-hackathon-2024";
+import "./App.css";
 
 function App() {
   const [name, setName] = useState("");
   const [response, setResponse] = useState("");
 
   async function sayHello() {
-    setResponse(await BackendService.hello(name));
+    const response = await GenerateInvoiceService.generateInvoice({
+      invoiceID: "id123",
+      startDate: "2024-04-01",
+      endDate: "2024-04-16",
+      CIF: "30124159",
+    });
+    setResponse(response);
   }
 
   return (
@@ -48,4 +54,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
