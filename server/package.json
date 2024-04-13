@@ -9,6 +9,7 @@
     "license": "ISC",
     "dependencies": {
         "@genezio/types": "^1.0.14",
+        "axios": "^1.6.8",
         "node-fetch": "^3.3.2"
     },
     "prettier": {
