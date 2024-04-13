@@ -10,7 +10,7 @@ function Form() {
     CIF: "",
   });
 
-  const [isGenerated, setIsGenerated] = useState(false);
+  const [pdfData, setPdfData] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,12 +22,10 @@ function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // Send formData to server for processing
-    if (isGenerated === false) {
-      const response = await GenerateInvoiceService.generateInvoice(formData);
-      console.log("response", response);
-      setIsGenerated(true);
+    const response = await GenerateInvoiceService.generateInvoice(formData);
+    if (response) {
+      setPdfData(response?.data);
       // Reset form after submission
       setFormData({
         invoiceID: "",
@@ -35,10 +33,23 @@ function Form() {
         endDate: "",
         CIF: "",
       });
-    } else {
-      //AICI DESCARCA FISIER
     }
   };
+
+  function onDownloadPdf() {
+    if (pdfData) {
+      const element = document.createElement("a");
+      const file = new Blob([new Uint8Array(pdfData)], {
+        type: "application/pdf",
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = "invoice.pdf";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    } else {
+      console.error("Error: PDF data is undefined or empty.");
+    }
+  }
 
   return (
     <div className="form">
@@ -85,10 +96,11 @@ function Form() {
           />
         </div>
 
-        <button type="submit">
-          {isGenerated === false ? "Genereaza Factura" : "Descarca Factura"}
-        </button>
+        <button type="submit">{"Genereaza Factura"}</button>
       </form>
+      {pdfData ? (
+        <button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
+      ) : null}
     </div>
   );
 }

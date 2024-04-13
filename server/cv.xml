@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:ns4="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd">
+    
+<cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:efactura.mfinante.ro:CIUS-RO:1.0.1</cbc:CustomizationID>
+<cbc:ID>71</cbc:ID>
+<cbc:IssueDate>2024-04-13</cbc:IssueDate>
+<cbc:DueDate>2024-04-20</cbc:DueDate>
+<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+<cbc:DocumentCurrencyCode>RON</cbc:DocumentCurrencyCode>
+
+    <cac:AccountingSupplierParty>
+    
+    <cac:Party>
+    <cac:PostalAddress>
+        <cbc:StreetName>Street name</cbc:StreetName>
+        <cbc:CityName>SECTOR6</cbc:CityName>
+        <cbc:CountrySubentity>RO-B</cbc:CountrySubentity>
+        <cac:Country>
+            <cbc:IdentificationCode>RO</cbc:IdentificationCode>
+        </cac:Country>
+    </cac:PostalAddress>
+    <cac:PartyTaxScheme>
+        <cbc:CompanyID>16350738</cbc:CompanyID>
+        <cac:TaxScheme/>
+    </cac:PartyTaxScheme>
+    <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Hello inc</cbc:RegistrationName>
+        <cbc:CompanyID>16350738</cbc:CompanyID>
+    </cac:PartyLegalEntity>
+</cac:Party>
+    
+    </cac:AccountingSupplierParty>
+    <cac:AccountingCustomerParty>
+    
+    <cac:Party>
+    <cac:PostalAddress>
+        <cbc:StreetName>Street name</cbc:StreetName>
+        <cbc:CityName>SECTOR6</cbc:CityName>
+        <cbc:CountrySubentity>RO-B</cbc:CountrySubentity>
+        <cac:Country>
+            <cbc:IdentificationCode>RO</cbc:IdentificationCode>
+        </cac:Country>
+    </cac:PostalAddress>
+    <cac:PartyTaxScheme>
+        <cbc:CompanyID>33184554</cbc:CompanyID>
+        <cac:TaxScheme/>
+    </cac:PartyTaxScheme>
+    <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Bye inc</cbc:RegistrationName>
+        <cbc:CompanyID>33184554</cbc:CompanyID>
+    </cac:PartyLegalEntity>
+</cac:Party>
+    
+    </cac:AccountingCustomerParty>
+    
+    <cac:TaxTotal>
+        <cbc:TaxAmount currencyID="RON">0.00</cbc:TaxAmount>
+        <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="RON">300</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="RON">0.00</cbc:TaxAmount>
+            <cac:TaxCategory>
+                <cbc:ID>E</cbc:ID>
+                <cbc:Percent>0.00</cbc:Percent>
+                <cbc:TaxExemptionReasonCode>VATEX-EU-132-1L</cbc:TaxExemptionReasonCode>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:TaxCategory>
+        </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:LegalMonetaryTotal>
+        <cbc:LineExtensionAmount currencyID="RON">300</cbc:LineExtensionAmount>
+        <cbc:TaxExclusiveAmount currencyID="RON">300</cbc:TaxExclusiveAmount>
+        <cbc:TaxInclusiveAmount currencyID="RON">300</cbc:TaxInclusiveAmount>
+        <cbc:AllowanceTotalAmount currencyID="RON">0.00</cbc:AllowanceTotalAmount>
+        <cbc:ChargeTotalAmount currencyID="RON">0.00</cbc:ChargeTotalAmount>
+        <cbc:PrepaidAmount currencyID="RON">0.00</cbc:PrepaidAmount>
+        <cbc:PayableRoundingAmount currencyID="RON">0.00</cbc:PayableRoundingAmount>
+        <cbc:PayableAmount currencyID="RON">300</cbc:PayableAmount>
+    </cac:LegalMonetaryTotal>
+
+
+    
+<cac:InvoiceLine>
+<cbc:ID>1</cbc:ID>
+<cbc:InvoicedQuantity unitCode="M4">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="RON">300</cbc:LineExtensionAmount>
+<cac:Item>
+    <cbc:Name>fjvkj</cbc:Name>
+    <cac:ClassifiedTaxCategory>
+        <cbc:ID>E</cbc:ID>
+        <cbc:Percent>0.00</cbc:Percent>
+        <cac:TaxScheme>
+            <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+    </cac:ClassifiedTaxCategory>
+</cac:Item>
+<cac:Price>
+    <cbc:PriceAmount currencyID="RON">300</cbc:PriceAmount>
+</cac:Price>
+</cac:InvoiceLine>
+    
+</Invoice>
+<!--XML generat cu aplicatia ANAF ver.1.0.8-->
+
