@@ -8,18 +8,22 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@genezio/types": "^1.0.14",
-        "node-fetch": "^3.3.2"
+        "@genezio/types": "1.0.14",
+        "axios": "1.6.8",
+        "date-fns": "3.6.0",
+        "dotenv": "16.4.5",
+        "nodemailer": "6.9.13",
+        "node-fetch": "3.3.2"
     },
     "prettier": {
         "tabWidth": 2
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.23.3",
-        "@babel/plugin-proposal-decorators": "^7.23.7",
-        "@types/node": "^20.11.15",
-        "eslint": "^8.56.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-plugin-import": "^2.29.1"
+        "@babel/eslint-parser": "7.23.3",
+        "@babel/plugin-proposal-decorators": "7.23.7",
+        "@types/node": "20.11.15",
+        "eslint": "8.56.0",
+        "eslint-config-airbnb-base": "15.0.0",
+        "eslint-plugin-import": "2.29.1"
     }
 }
