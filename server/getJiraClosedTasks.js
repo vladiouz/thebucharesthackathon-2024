@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GenerateInvoiceDescriptionService } from "./generateInvoiceDescription";
+import "dotenv/config";
 
 const minResolvedString = "%22%20AND%20resolved%20%3E%20%22";
 const maxResolvedString = "%22%20AND%20resolved%20%3C%20%22";
@@ -8,8 +9,6 @@ const endingString = "%22";
 const baseJiraUrl =
   "https://ionescupv.atlassian.net/rest/api/2/search?jql=status%20=%20%22Done";
 const apiEmail = "ionescupv@gmail.com";
-const apiToken =
-  "ATATT3xFfGF0l6dPKWeseApRraIDYlPAQThQkHQhRtn6k1Pikpjs2YAzc3vY2LMFvajlR1MPbUCWJk6src59hEVpiudQDV7e97mnjNVqyKPsBJ5MWPtq8SL5VJL-DXqJfo5Zjjvb1ETPtreEqEvz4HRWecJ2a3AcfGrgqF-35pk5RuLTERf-9N4=7733AF6E";
 
 export const DEV_IDS = ["712020:d48c6fe4-f0f7-4569-99d6-1844285b5fde"];
 export const DESIGNER_IDS = ["70121:a70cc62c-2816-4b23-99d6-b76894895223"];
@@ -28,7 +27,7 @@ export class GetJiraClosedTasksService {
         .get(processedJiraUrl, {
           auth: {
             username: apiEmail,
-            password: apiToken,
+            password: process.env.JIRA_API_TOKEN,
           },
           "Content-Type": "application/json",
         })
@@ -36,8 +35,6 @@ export class GetJiraClosedTasksService {
           console.log("Error", error);
         })
     )?.data;
-
-    console.log('["getClosedTasks"] response', response);
 
     const processedTasks =
       await ProcessClosedTasksService.processTasks(response);

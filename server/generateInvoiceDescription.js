@@ -5,7 +5,6 @@ import {
 
 const huggingFaceApiUrl =
   "https://api-inference.huggingface.co/models/google/flan-t5-xxl";
-const bearerToken = "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";
 
 export class GenerateInvoiceDescriptionService {
   static generateInvoiceDescription(tasks) {
@@ -38,7 +37,7 @@ export class GenerateInvoiceDescriptionService {
   static async generateInvoiceDescriptionWithAI(inputString) {
     const response = await fetch(huggingFaceApiUrl, {
       headers: {
-        Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${process.env.HUGGINGFACE_BEARER_TOKEN}`,
       },
       method: "POST",
       body: "I had the following tasks completed and I want you to generate a description between 20 and 100 words for my invoice: Create email sending script, Create email sending script, Login Functionality",
