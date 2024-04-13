@@ -3,10 +3,10 @@ import "./form.css";
 
 function Form() {
   const [formData, setFormData] = useState({
-    numarFactura: "",
-    dataFactura: "",
-    dataScadenta: "",
-    cifClient: "",
+    invoiceID: "",
+    startDate: "",
+    endDate: "",
+    CIF: "",
   });
 
   const [isGenerated, setIsGenerated] = useState(false);
@@ -23,8 +23,8 @@ function Form() {
     console.log(formData);
 
     e.preventDefault();
-    // Send formData to server for processing
 
+    // Send formData to server for processing
     if (isGenerated === false) {
       fetch("your-server-endpoint", {
         method: "POST",
@@ -37,20 +37,17 @@ function Form() {
         .then((data) => {
           console.log("Server Response:", data);
           setIsGenerated(true);
-          // Optionally handle server response
         })
         .catch((error) => {
           console.error("Error:", error);
-
-          // Optionally handle errors
         });
 
       // Reset form after submission
       setFormData({
-        numarFactura: "",
-        dataFactura: "",
-        dataScadenta: "",
-        cifClient: "",
+        invoiceID: "",
+        startDate: "",
+        endDate: "",
+        CIF: "",
       });
     } else {
       //AICI DESCARCA FISIER
@@ -67,7 +64,7 @@ function Form() {
             type="text"
             id="numarFactura"
             name="numarFactura"
-            value={formData.numarFactura}
+            value={formData.invoiceID}
             onChange={handleChange}
           />
           <br />
@@ -76,7 +73,7 @@ function Form() {
             type="date"
             id="dataFactura"
             name="dataFactura"
-            value={formData.dataFactura}
+            value={formData.startDate}
             onChange={handleChange}
           />
           <br />
@@ -85,7 +82,7 @@ function Form() {
             type="date"
             id="dataScadenta"
             name="dataScadenta"
-            value={formData.dataScadenta}
+            value={formData.endDate}
             onChange={handleChange}
           />
         </div>
@@ -97,7 +94,7 @@ function Form() {
             type="text"
             id="cifClient"
             name="cifClient"
-            value={formData.cifClient}
+            value={formData.CIF}
             onChange={handleChange}
           />
         </div>
