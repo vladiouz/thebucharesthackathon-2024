@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { GenerateInvoiceService } from "@genezio-sdk/the-bucharest-hackathon-2024";
 import "./form.css";
 
 function Form() {
@@ -19,29 +20,14 @@ function Form() {
     });
   };
 
-  const handleSubmit = (e) => {
-    console.log(formData);
-
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Send formData to server for processing
     if (isGenerated === false) {
-      fetch("your-server-endpoint", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Server Response:", data);
-          setIsGenerated(true);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
+      const response = await GenerateInvoiceService.generateInvoice(formData);
+      console.log("response", response);
+      setIsGenerated(true);
       // Reset form after submission
       setFormData({
         invoiceID: "",
