@@ -13,6 +13,7 @@
         "date-fns": "3.6.0",
         "node-fetch": "3.3.2",
         "nodemailer": "^6.9.13"
+        "dotenv": "^16.4.5",
     },
     "prettier": {
         "tabWidth": 2
@@ -21,7 +22,6 @@
         "@babel/eslint-parser": "7.23.3",
         "@babel/plugin-proposal-decorators": "7.23.7",
         "@types/node": "20.11.15",
-        "dotenv": "^16.4.5",
         "eslint": "8.56.0",
         "eslint-config-airbnb-base": "15.0.0",
         "eslint-plugin-import": "2.29.1"
