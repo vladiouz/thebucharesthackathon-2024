@@ -46,7 +46,7 @@ function dateFacturaXml(id_fac, issueDate, dueDate, curr) { return `
 }
 
 function legalTotal(tot_no_vat){ 
-    tot_net = 1.19*tot_no_vat;
+    const tot_net = 1.19*tot_no_vat;
     return `
     <cac:TaxTotal>
         <cbc:TaxAmount currencyID="RON">0.00</cbc:TaxAmount>
@@ -143,8 +143,8 @@ const getXML = (obj_fac) => {
         seller.CUI)
     let itemobj = ""
     
-    for(j in items) {
-        i = items[j]
+    for(let j in items) {
+        let i = items[j]
         // append to string
 
         itemobj += item(i.id, i.sum, i.desc, i.name);
@@ -157,5 +157,4 @@ const getXML = (obj_fac) => {
         .replace("{4}", itemobj)
 }
 
-console.log(getXML(fac))
-
+module.exports = getXML

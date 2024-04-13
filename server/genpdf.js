@@ -1,10 +1,12 @@
-const axios = require('axios');
-const fs = require('fs');
+import axios from 'axios';
+import fs from 'fs';
+import getXML from './xml'
 
-async function sendXMLAndGetPDF() {
+export class SendXMLService {
+static async sendXMLAndGetPDF(fac) {
   try {
     // Prepare the XML data
-    const xmlData = fs.readFileSync('cv.xml', 'utf-8');
+    const xmlData = getXML(fac);
 
     // Set up the HTTP request headers
     const config = {
@@ -18,12 +20,11 @@ async function sendXMLAndGetPDF() {
     const response = await axios.post('https://webservicesp.anaf.ro/prod/FCTEL/rest/transformare/FACT1', xmlData, config);
 
     // Write the PDF file received in response
-    fs.writeFileSync('output.pdf', response.data);
+    return response.data
 
     console.log('PDF file has been saved.');
   } catch (error) {
     console.error('Error during API call:', error.message);
   }
 }
-
-sendXMLAndGetPDF();
+}
