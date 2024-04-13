@@ -1,0 +1,2 @@
+run:
+	genezio local
