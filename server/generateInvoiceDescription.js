@@ -2,6 +2,7 @@ import {
   DESIGNER_RATE_PER_HOUR,
   DEV_RATE_PER_HOUR,
 } from "./getJiraClosedTasks";
+import "dotenv/config";
 
 const huggingFaceApiUrl =
   "https://api-inference.huggingface.co/models/google/flan-t5-xxl";
