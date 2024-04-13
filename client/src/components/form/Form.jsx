@@ -59,29 +59,29 @@ function Form() {
       <form onSubmit={handleSubmit}>
         <div className="dateFactura">
           <h2>Date Factura</h2>
-          <label htmlFor="numarFactura">Numar factura:</label>
+          <label htmlFor="invoiceID">Numar factura:</label>
           <input
             type="text"
-            id="numarFactura"
-            name="numarFactura"
+            id="invoiceID"
+            name="invoiceID"
             value={formData.invoiceID}
             onChange={handleChange}
           />
           <br />
-          <label htmlFor="dataFactura">Data factura:</label>
+          <label htmlFor="startDate">Data factura:</label>
           <input
             type="date"
-            id="dataFactura"
-            name="dataFactura"
+            id="startDate"
+            name="startDate"
             value={formData.startDate}
             onChange={handleChange}
           />
           <br />
-          <label htmlFor="dataScadenta">Data scadenta:</label>
+          <label htmlFor="endDate">Data scadenta:</label>
           <input
             type="date"
-            id="dataScadenta"
-            name="dataScadenta"
+            id="endDate"
+            name="endDate"
             value={formData.endDate}
             onChange={handleChange}
           />
@@ -89,11 +89,11 @@ function Form() {
 
         <div className="dateFactura">
           <h2>Date Client</h2>
-          <label htmlFor="cifClient">CIF al clientului:</label>
+          <label htmlFor="CIF">CIF al clientului:</label>
           <input
             type="text"
-            id="cifClient"
-            name="cifClient"
+            id="CIF"
+            name="CIF"
             value={formData.CIF}
             onChange={handleChange}
           />
