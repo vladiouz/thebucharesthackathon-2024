@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GenerateInvoiceService } from "@genezio-sdk/the-bucharest-hackathon-2024";
 import { SendMailService } from "@genezio-sdk/the-bucharest-hackathon-2024";
 import "./form.css";
+import { Buffer } from "buffer";
 
 function Form() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ function Form() {
     CIF: "",
   });
 
-  const [pdfData, setPdfData] = useState(null);
+  const [pdfFile, setPdfFile] = useState(null);
   const [invoiceDownloaded, setInvoiceDownloaded] = useState(false);
 
   const handleChange = (e) => {
@@ -27,7 +28,11 @@ function Form() {
     // Send formData to server for processing
     const response = await GenerateInvoiceService.generateInvoice(formData);
     if (response) {
-      setPdfData(response?.data);
+      setPdfFile(
+        new Blob([new Uint8Array(response?.data)], {
+          type: "application/pdf",
+        }),
+      );
       // Reset form after submission
       // setFormData({
       //   invoiceID: "",
@@ -39,13 +44,10 @@ function Form() {
   };
 
   function onDownloadPdf() {
-    if (pdfData) {
+    if (pdfFile) {
       setInvoiceDownloaded(true);
       const element = document.createElement("a");
-      const file = new Blob([new Uint8Array(pdfData)], {
-        type: "application/pdf",
-      });
-      element.href = URL.createObjectURL(file);
+      element.href = URL.createObjectURL(pdfFile);
       element.download = "invoice.pdf";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
@@ -55,7 +57,17 @@ function Form() {
   }
 
   async function onSendMail() {
-    await SendMailService.sendMail("vlad.ionescu@eestec.ro", "New Invoice", "You have a new invoice!", "invoice.pdf");
+    const fileToSend = Buffer.from(await pdfFile.arrayBuffer()).toString(
+      "base64",
+    );
+    await SendMailService.sendMail(
+      fileToSend,
+      formData.startDate,
+      formData.endDate,
+      "vlad.ionescu@eestec.ro",
+      "New Invoice",
+      "You have a new invoice!",
+    );
   }
 
   return (
@@ -102,15 +114,17 @@ function Form() {
             onChange={handleChange}
           />
         </div>
-        {pdfData ? (
-            <><button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
-            {invoiceDownloaded && <button onClick={onSendMail}>Send invoice on email</button>}
-            </>
+        {pdfFile ? (
+          <>
+            <button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
+            {invoiceDownloaded && (
+              <button onClick={onSendMail}>Send invoice on email</button>
+            )}
+          </>
         ) : (
           <button type="submit">{"Genereaza Factura"}</button>
         )}
       </form>
-
     </div>
   );
 }
