@@ -12,6 +12,7 @@ function Form() {
   });
 
   const [pdfData, setPdfData] = useState(null);
+  const [invoiceDownloaded, setInvoiceDownloaded] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,6 @@ function Form() {
     const response = await GenerateInvoiceService.generateInvoice(formData);
     if (response) {
       setPdfData(response?.data);
-      await SendMailService.sendMail("vlad.ionescu@eestec.ro", "New Invoice", "You have a new invoice!", "invoice.pdf");
       // Reset form after submission
       setFormData({
         invoiceID: "",
@@ -38,8 +38,9 @@ function Form() {
     }
   };
 
-  async function onDownloadPdf() {
+  function onDownloadPdf() {
     if (pdfData) {
+      setInvoiceDownloaded(true);
       const element = document.createElement("a");
       const file = new Blob([new Uint8Array(pdfData)], {
         type: "application/pdf",
@@ -51,6 +52,10 @@ function Form() {
     } else {
       console.error("Error: PDF data is undefined or empty.");
     }
+  }
+
+  async function onSendMail() {
+    await SendMailService.sendMail("vlad.ionescu@eestec.ro", "New Invoice", "You have a new invoice!", "invoice.pdf");
   }
 
   return (
@@ -98,7 +103,9 @@ function Form() {
           />
         </div>
         {pdfData ? (
-          <button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
+            <><button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
+            {invoiceDownloaded && <button onClick={onSendMail}>Send invoice on email</button>}
+            </>
         ) : (
           <button type="submit">{"Genereaza Factura"}</button>
         )}

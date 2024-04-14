@@ -31,8 +31,8 @@ export class SendMailService {
   async sendMail(to, subject, text, filename) {
     const processedTasks = await getProcessedTasks();
     const price = await stripe.prices.create({
-    currency: "usd",
-    unit_amount: processedTasks.cost.total,
+    currency: "ron",
+    unit_amount: processedTasks.cost.total * 100,
     product_data: {
         name: "Software",
     },

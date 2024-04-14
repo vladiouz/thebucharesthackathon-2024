@@ -1,4 +1,7 @@
-client/
+client
 .git
 .DS_Store
 client/.DS_Store
+invoice.pdf
+listafactura.txt
+server/invoice.pdf
