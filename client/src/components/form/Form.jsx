@@ -29,12 +29,12 @@ function Form() {
     if (response) {
       setPdfData(response?.data);
       // Reset form after submission
-      setFormData({
-        invoiceID: "",
-        startDate: "",
-        endDate: "",
-        CIF: "",
-      });
+      // setFormData({
+      //   invoiceID: "",
+      //   startDate: "",
+      //   endDate: "",
+      //   CIF: "",
+      // });
     }
   };
 

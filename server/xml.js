@@ -11,19 +11,21 @@ const formatString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     {4}
 </Invoice>
 <!--XML generat cu aplicatia ANAF ver.1.0.8-->
-`
+`;
 
-function dateFacturaXml(id_fac, issueDate, dueDate, curr) { return `
+function dateFacturaXml(id_fac, issueDate, dueDate, curr) {
+  return `
 <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:efactura.mfinante.ro:CIUS-RO:1.0.1</cbc:CustomizationID>
 <cbc:ID>${id_fac}</cbc:ID>
 <cbc:IssueDate>${issueDate}</cbc:IssueDate>
 <cbc:DueDate>${dueDate}</cbc:DueDate>
 <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
 <cbc:DocumentCurrencyCode>${curr}</cbc:DocumentCurrencyCode>
-`
+`;
 }
 
-    function party(nume_companie, nr_reg, CUI) { return `
+function party(nume_companie, nr_reg, CUI) {
+  return `
     <cac:Party>
     <cac:PostalAddress>
         <cbc:StreetName>Street name</cbc:StreetName>
@@ -42,12 +44,12 @@ function dateFacturaXml(id_fac, issueDate, dueDate, curr) { return `
         <cbc:CompanyID>${CUI}</cbc:CompanyID>
     </cac:PartyLegalEntity>
 </cac:Party>
-    `
+    `;
 }
 
-function legalTotal(tot_no_vat){ 
-    const tot_net = 1.19*tot_no_vat;
-    return `
+function legalTotal(tot_no_vat) {
+  const tot_net = 1.19 * tot_no_vat;
+  return `
     <cac:TaxTotal>
         <cbc:TaxAmount currencyID="RON">0.00</cbc:TaxAmount>
         <cac:TaxSubtotal>
@@ -74,17 +76,17 @@ function legalTotal(tot_no_vat){
         <cbc:PayableAmount currencyID="RON">${tot_no_vat}</cbc:PayableAmount>
     </cac:LegalMonetaryTotal>
 
-`
+`;
 }
 
-
-
-function item(id, sum, desc, name) { return `
+function item(id, sum, desc, name) {
+  return `
 <cac:InvoiceLine>
 <cbc:ID>${id}</cbc:ID>
 <cbc:InvoicedQuantity unitCode="M4">1.00</cbc:InvoicedQuantity>
 <cbc:LineExtensionAmount currencyID="RON">${sum}</cbc:LineExtensionAmount>
 <cac:Item>
+    <cbc:Description>${desc}</cbc:Description>
     <cbc:Name>${name}</cbc:Name>
     <cac:ClassifiedTaxCategory>
         <cbc:ID>E</cbc:ID>
@@ -98,63 +100,63 @@ function item(id, sum, desc, name) { return `
     <cbc:PriceAmount currencyID="RON">${sum}</cbc:PriceAmount>
 </cac:Price>
 </cac:InvoiceLine>
-    `
+    `;
 }
 
 const fac = {
-    id_fac: "71",
-    issueDate: "2024-04-13",
-    dueDate: "2024-04-20",
-    curr: "RON",
-    seller : {
-        nume_companie: "Hello inc",
-        nr_reg: "98871798579",
-        CUI: "16350738"
+  id_fac: "71",
+  issueDate: "2024-04-13",
+  dueDate: "2024-04-20",
+  curr: "RON",
+  seller: {
+    nume_companie: "Hello inc",
+    nr_reg: "98871798579",
+    CUI: "16350738",
+  },
+  client: {
+    nume_companie: "Bye inc",
+    nr_reg: "5387685871638",
+    CUI: "33184554",
+  },
+  legal: {
+    tot_net: 402,
+    tot_no_vat: 300,
+  },
+  items: [
+    {
+      id: 1,
+      sum: 300,
+      desc: "jfdhskfdhd",
+      name: "fjvkj",
     },
-    client : {
-        nume_companie: "Bye inc",
-        nr_reg: "5387685871638",
-        CUI: "33184554"
-    },
-    legal : {
-        tot_net: 402,
-        tot_no_vat: 300
-    },
-    items : [
-        {
-            id: 1, sum: 300, desc: "jfdhskfdhd", name: "fjvkj"
-        }
-    ]
-
-}
+  ],
+};
 
 const getXML = (obj_fac) => {
-    const d = dateFacturaXml(obj_fac.id_fac,
-        obj_fac.issueDate,
-        obj_fac.dueDate,
-        obj_fac.curr)
-    const {client, seller, legal, items} = obj_fac
-    const l = legalTotal(legal.tot_no_vat);
-    const c = party(client.nume_companie,
-        client.nr_reg,
-        client.CUI)
-    const s = party(seller.nume_companie,
-        seller.nr_reg,
-        seller.CUI)
-    let itemobj = ""
-    
-    for(let j in items) {
-        let i = items[j]
-        // append to string
+  const d = dateFacturaXml(
+    obj_fac.id_fac,
+    obj_fac.issueDate,
+    obj_fac.dueDate,
+    obj_fac.curr,
+  );
+  const { client, seller, legal, items } = obj_fac;
+  const l = legalTotal(legal.tot_no_vat);
+  const c = party(client.nume_companie, client.nr_reg, client.CUI);
+  const s = party(seller.nume_companie, seller.nr_reg, seller.CUI);
+  let itemobj = "";
 
-        itemobj += item(i.id, i.sum, i.desc, i.name);
-    }
-    return formatString
-        .replace("{0}", d)
-        .replace("{1}", s)
-        .replace("{2}", c)
-        .replace("{3}", l)
-        .replace("{4}", itemobj)
-}
+  for (let j in items) {
+    let i = items[j];
+    // append to string
 
-module.exports = getXML
+    itemobj += item(i.id, i.sum, i.desc, i.name);
+  }
+  return formatString
+    .replace("{0}", d)
+    .replace("{1}", s)
+    .replace("{2}", c)
+    .replace("{3}", l)
+    .replace("{4}", itemobj);
+};
+
+module.exports = getXML;

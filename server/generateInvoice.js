@@ -73,8 +73,8 @@ export class GenerateInvoiceService {
         {
           id: 1,
           sum: processedTasks.cost.total,
-          desc: "",
-          name: processedTasks.invoiceDescription || "itemname",
+          desc: processedTasks.invoiceDescription || "",
+          name: processedTasks.invoiceName || "",
         },
       ],
     };
