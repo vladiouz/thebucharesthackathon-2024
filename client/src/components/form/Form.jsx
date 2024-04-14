@@ -64,10 +64,11 @@ function Form() {
       fileToSend,
       formData.startDate,
       formData.endDate,
-      "vlad.ionescu@eestec.ro",
+      "florin.barbalan@eestec.ro",
       "New Invoice",
       "You have a new invoice!",
     );
+    console.log("[Mail sent]");
   }
 
   return (
