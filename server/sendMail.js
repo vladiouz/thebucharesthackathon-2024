@@ -1,12 +1,13 @@
 import { GenezioDeploy } from "@genezio/types";
-import { GenerateInvoiceService, getProcessedTasks } from "./generateInvoice.js";
+import {
+  GenerateInvoiceService,
+  getProcessedTasks,
+} from "./generateInvoice.js";
 
-const nodemailer = require('nodemailer');
-const fs = require('fs');
+const nodemailer = require("nodemailer");
+import "dotenv/config";
 
-const stripe = require("stripe")(
-  "sk_test_51P5ARCLerUxd8e3bL0vjXfemdc6taL8p6VmHrS3hmK9U8BZVq7OysRrFIsrsW3hrGlOth4tK6Q3QKdfW6rnXfp1200tD8YEFUR"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const YOUR_DOMAIN = "http://localhost:5173";
 
@@ -28,25 +29,25 @@ export class SendMailService {
     return session.url;
   }
 
-  async sendMail(to, subject, text, filename) {
-    const processedTasks = await getProcessedTasks();
+  async sendMail(file, startDate, endDate, to, subject, text) {
+    const processedTasks = await getProcessedTasks(startDate, endDate);
     const price = await stripe.prices.create({
-    currency: "ron",
-    unit_amount: processedTasks.cost.total * 100,
-    product_data: {
+      currency: "ron",
+      unit_amount: processedTasks.cost.total * 100,
+      product_data: {
         name: "Software",
-    },
+      },
     });
 
     text += " You can pay ";
     text += `<a href=${await this.payWithStripe(price.id)}>here</a>`;
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: "bucharest-cp@eestec.net",
         pass: "gouo iarr zynm hfvn",
-      }
+      },
     });
 
     let mailOptions = {
@@ -56,17 +57,17 @@ export class SendMailService {
       html: text,
       attachments: [
         {
-          filename: filename,
-          content: fs.createReadStream(filename),
+          filename: "invoice.pdf",
+          content: Buffer.from(file, "base64"),
         },
       ],
     };
 
-    transporter.sendMail(mailOptions, function(err, info) {
-      if(err) {
-        console.log('Error Occurs', err);
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err) {
+        console.log("Error Occurs", err);
       } else {
-        console.log('Email sent: ' + info.response);
+        console.log("Email sent: " + info.response);
       }
     });
   }

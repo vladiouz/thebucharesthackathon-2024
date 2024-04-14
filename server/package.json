@@ -10,13 +10,15 @@
     "dependencies": {
         "@genezio/types": "1.0.14",
         "axios": "1.6.8",
+        "buffer": "^6.0.3",
         "date-fns": "3.6.0",
         "dotenv": "16.4.5",
-        "jspdf": "^2.5.1",
+        "jspdf": "2.5.1",
         "node-fetch": "3.3.2",
         "nodemailer": "6.9.13",
-        "stripe": "^15.1.0",
-        "xml2js": "^0.6.2"
+        "openai": "4.33.1",
+        "stripe": "15.1.0",
+        "xml2js": "0.6.2"
     },
     "prettier": {
         "tabWidth": 2
