@@ -43,15 +43,17 @@ const fac = {
   ],
 };
 
+export async function getProcessedTasks(startDate, endDate) {
+  return await GetJiraClosedTasksService.getClosedTasks(startDate, endDate);
+}
+
 @GenezioDeploy()
 export class GenerateInvoiceService {
+  
   async generateInvoice(payload) {
     const { invoiceID, startDate, endDate, CIF } = payload;
 
-    const processedTasks = await GetJiraClosedTasksService.getClosedTasks(
-      startDate,
-      endDate,
-    );
+    const processedTasks = await getProcessedTasks(startDate, endDate);
 
     const invoice = {
       id_fac: invoiceID,

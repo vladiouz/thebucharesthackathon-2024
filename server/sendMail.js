@@ -1,4 +1,5 @@
 import { GenezioDeploy } from "@genezio/types";
+import { GenerateInvoiceService, getProcessedTasks } from "./generateInvoice.js";
 
 const nodemailer = require('nodemailer');
 const fs = require('fs');
@@ -27,10 +28,11 @@ export class SendMailService {
     return session.url;
   }
 
-  async sendMail(to, subject, text, filename, price) {
-    price = await stripe.prices.create({
+  async sendMail(to, subject, text, filename) {
+    const processedTasks = await getProcessedTasks();
+    const price = await stripe.prices.create({
     currency: "usd",
-    unit_amount: price,
+    unit_amount: processedTasks.cost.total,
     product_data: {
         name: "Software",
     },

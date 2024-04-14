@@ -2,6 +2,7 @@ import axios from "axios";
 import { GenerateInvoiceDescriptionService } from "./generateInvoiceDescription";
 import "dotenv/config";
 
+
 const minResolvedString = "%22%20AND%20resolved%20%3E%20%22";
 const maxResolvedString = "%22%20AND%20resolved%20%3C%20%22";
 const endingString = "%22";
@@ -17,27 +18,35 @@ export const DESIGNER_RATE_PER_HOUR = 12;
 
 export class GetJiraClosedTasksService {
   static async getClosedTasks(startDate, endDate) {
+    console.log(startDate, endDate);
     const processedJiraUrl =
       baseJiraUrl +
       (startDate ? `${minResolvedString}${startDate}` : "") +
       (endDate ? `${maxResolvedString}${endDate}` : "") +
       endingString;
+
+
     const response = (
       await axios
         .get(processedJiraUrl, {
           auth: {
             username: apiEmail,
-            password: process.env.JIRA_API_TOKEN,
+            password: process.env.JIRA_API_TOKEN2,
           },
-          "Content-Type": "application/json",
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
         .catch((error) => {
           console.log("Error", error);
         })
     )?.data;
 
-    const processedTasks =
-      await ProcessClosedTasksService.processTasks(response);
+    console.log(response);
+
+    const processedTasks = await ProcessClosedTasksService.processTasks(
+      response
+    );
 
     return processedTasks;
   }

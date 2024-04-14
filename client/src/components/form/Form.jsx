@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GenerateInvoiceService } from "@genezio-sdk/the-bucharest-hackathon-2024";
+import { SendMailService } from "@genezio-sdk/the-bucharest-hackathon-2024";
 import "./form.css";
 
 function Form() {
@@ -26,6 +27,7 @@ function Form() {
     const response = await GenerateInvoiceService.generateInvoice(formData);
     if (response) {
       setPdfData(response?.data);
+      await SendMailService.sendMail("vlad.ionescu@eestec.ro", "New Invoice", "You have a new invoice!", "invoice.pdf");
       // Reset form after submission
       setFormData({
         invoiceID: "",
@@ -36,7 +38,7 @@ function Form() {
     }
   };
 
-  function onDownloadPdf() {
+  async function onDownloadPdf() {
     if (pdfData) {
       const element = document.createElement("a");
       const file = new Blob([new Uint8Array(pdfData)], {
@@ -65,7 +67,7 @@ function Form() {
             onChange={handleChange}
           />
           <br />
-          <label htmlFor="startDate">Data factura:</label>
+          <label htmlFor="startDate">Data inceput:</label>
           <input
             type="date"
             id="startDate"
@@ -74,7 +76,7 @@ function Form() {
             onChange={handleChange}
           />
           <br />
-          <label htmlFor="endDate">Data scadenta:</label>
+          <label htmlFor="endDate">Data incheiere:</label>
           <input
             type="date"
             id="endDate"
@@ -95,12 +97,13 @@ function Form() {
             onChange={handleChange}
           />
         </div>
-
-        <button type="submit">{"Genereaza Factura"}</button>
+        {pdfData ? (
+          <button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
+        ) : (
+          <button type="submit">{"Genereaza Factura"}</button>
+        )}
       </form>
-      {pdfData ? (
-        <button onClick={onDownloadPdf}>{"Descarca Factura"}</button>
-      ) : null}
+
     </div>
   );
 }
