@@ -45,3 +45,4 @@ frontend:
     start:
       - npm install --silent
       - npm run dev --silent
+  subdomain: peach-prominent-armadillo
